@@ -59,5 +59,7 @@ dependencies {
 // Amazon SNS SDK for push/alert publishing
     implementation(libs.aws.android.sdk.sns)
 
+    implementation(libs.play.services.location)
+
 
 }
