@@ -1,6 +1,9 @@
 [versions]
 agp = "8.10.1"
+app = "1.4.0"
 awsAndroidSdkCore = "2.51.0"
+car = "1.0.0"
+carLib = "33.0.0"
 kotlin = "2.0.21"
 coreKtx = "1.10.1"
 junit = "4.13.2"
@@ -12,11 +15,15 @@ activity = "1.8.0"
 constraintlayout = "2.1.4"
 firebaseFirestoreKtx = "25.1.4"
 playServicesLocation = "21.3.0"
+firebaseCrashlyticsBuildtools = "3.0.4"
 
 [libraries]
+androidx-app = { module = "androidx.car.app:app", version.ref = "app" }
+androidx-car = { module = "androidx.car:car", version.ref = "car" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 aws-android-sdk-core = { module = "com.amazonaws:aws-android-sdk-core", version.ref = "awsAndroidSdkCore" }
 aws-android-sdk-sns = { module = "com.amazonaws:aws-android-sdk-sns", version.ref = "awsAndroidSdkCore" }
+car-lib = { module = "android.car:car-lib", version.ref = "carLib" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -26,6 +33,7 @@ androidx-activity = { group = "androidx.activity", name = "activity", version.re
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
+firebase-crashlytics-buildtools = { group = "com.google.firebase", name = "firebase-crashlytics-buildtools", version.ref = "firebaseCrashlyticsBuildtools" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

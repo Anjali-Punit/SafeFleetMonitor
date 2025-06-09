@@ -1,14 +1,19 @@
-#  SpeedSense
+# SpeedSense
 
 **Smart Speed Monitoring System for Car Rentals**
 
-SpeedSense is a Kotlin-based Android Automotive OS (AAOS) application designed for car rental companies to monitor renter driving behavior in real-time. If a vehicle exceeds the permitted speed limit (defined per customer), the system alerts the renter and notifies the fleet company using Firebase, with optional AWS SNS integration.
+SpeedSense is a Kotlin-based Android Automotive OS (AAOS) application designed for car rental
+companies to monitor renter driving behavior in real-time. If a vehicle exceeds the permitted speed
+limit (defined per customer), the system alerts the renter and notifies the fleet company using
+Firebase, with optional AWS SNS integration.
 
 ---
 
-##  Use Case
+## Use Case
 
-A car rental company wants to be alerted if a renter drives at a speed above a predefined limit. Each customer can have their own speed limit, set before the rental begins. If the speed is exceeded:
+A car rental company wants to be alerted if a renter drives at a speed above a predefined limit.
+Each customer can have their own speed limit, set before the rental begins. If the speed is
+exceeded:
 
 - ✅ The **renter receives an in-car warning**
 - ✅ The **rental company is notified** via Firebase Cloud Messaging (FCM)
@@ -27,7 +32,7 @@ A car rental company wants to be alerted if a renter drives at a speed above a p
 
 ---
 
-##  Setup & Configuration
+## Setup & Configuration
 
 ### 1. Clone the Repository
 
@@ -83,5 +88,14 @@ cd SpeedSense
  - Firebase or AWS SNS sends a message to the company
 
  -In real implementation, you'd pull speed data via GPS or AAOS Vehicle APIs.
+
+### 8. Updated Plan for Real Device Testing (AAOS):
+We'll modify SpeedMonitorService to:
+
+Check if Car and CarPropertyManager are available.
+
+If yes, use PERF_VEHICLE_SPEED.
+
+Else, fallback to GPS-based speed (optional fallback).
 
 

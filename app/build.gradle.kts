@@ -13,7 +13,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.myapplication"
-        minSdk = 24
+        minSdk = 30
         targetSdk = 35
         versionCode = 1
         versionName = "1.0"
@@ -47,6 +47,7 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.firebase.firestore.ktx)
+    implementation(libs.firebase.crashlytics.buildtools)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -60,6 +61,12 @@ dependencies {
     implementation(libs.aws.android.sdk.sns)
 
     implementation(libs.play.services.location)
+
+
+    // For AAOS
+    implementation(libs.androidx.car)     // CarPropertyManager
+    implementation(libs.androidx.app) // For Android Auto apps
+    implementation(libs.car.lib) // For Android Automotive OS (AAOS)
 
 
 }
