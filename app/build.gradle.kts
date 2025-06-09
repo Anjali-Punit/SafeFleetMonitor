@@ -51,5 +51,13 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    //optional adding AWS SDK to your Gradle
+
+// Required AWS SDK core library
+    implementation(libs.aws.android.sdk.core)
+
+// Amazon SNS SDK for push/alert publishing
+    implementation(libs.aws.android.sdk.sns)
+
 
 }

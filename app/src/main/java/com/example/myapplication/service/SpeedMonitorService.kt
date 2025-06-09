@@ -14,21 +14,34 @@ import kotlin.random.Random
 class SpeedMonitorService : Service() {
 
     private val handler = Handler()
-    private val checkInterval = 3000L // Check every 3 seconds , Simulates speed every 3 seconds
+    private val checkInterval = 3000L
+
+    private lateinit var snsNotifier: AwsSnsNotifier
 
     private val speedCheckRunnable = object : Runnable {
         override fun run() {
             val currentSpeed = simulateCurrentSpeed()
-            val customer = RentalManager.getCurrentCustomer() //  Compares with customer’s limit
+            val customer = RentalManager.getCurrentCustomer()
+
             customer?.let {
                 if (SpeedUtils.isOverSpeedLimit(currentSpeed, it.maxSpeed)) {
-                    showWarning(currentSpeed) //If exceeded:  Shows a Toast warning
+                    showWarning(currentSpeed)
 
-                    FirebaseNotifier.notifyFleet(it.id, currentSpeed) //Notifies Firebase
+                    FirebaseNotifier.notifyFleet(it.id, currentSpeed)
+
+                    val alertMsg = "Speed violation: $currentSpeed km/h (limit: ${it.maxSpeed})"
+                    snsNotifier.sendSms(alertMsg, "+911234567890")
+                    snsNotifier.sendEmail(alertMsg)
                 }
             }
+
             handler.postDelayed(this, checkInterval)
         }
+    }
+
+    override fun onCreate() {
+        super.onCreate()
+        snsNotifier = AwsSnsNotifier()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -44,7 +57,7 @@ class SpeedMonitorService : Service() {
     override fun onBind(intent: Intent?): IBinder? = null
 
     private fun simulateCurrentSpeed(): Int =
-        Random.nextInt(50, 140) // Runs repeatedly until stopped
+        Random.nextInt(50, 140)
 
     private fun showWarning(speed: Int) {
         Toast.makeText(this, "Warning! Speed exceeded: $speed km/h", Toast.LENGTH_SHORT).show()
