@@ -21,14 +21,22 @@ exceeded:
 
 ---
 
-## 🚀 Features
+## 🚀 Features Implemented
 
-- Real-time vehicle speed tracking
-- Per-customer configurable speed limits
-- In-car warnings when limits are exceeded
-- Notifications to the rental company via Firebase
-- Optional integration with AWS SNS (SMS/email)
-- Designed for Android Automotive OS
+- Foreground service to continuously monitor speed
+- Firebase integration to log and notify speed violations
+- AWS SNS integration to send SMS and email alerts
+- CarPropertyManager integration to read real-time vehicle speed (if available)
+- Fallback to GPS-based speed tracking for compatibility
+ 
+## Tech Stack
+
+- Kotlin
+- Android Automotive OS (AAOS)
+- Firebase Cloud Messaging
+- AWS Simple Notification Service (SNS)
+- Google Play Services Location (FusedLocationProviderClient)
+
 
 ---
 
@@ -52,7 +60,7 @@ cd SpeedSense
 
  - Create a new project
 
- - Add your app’s package name (e.g., com.fleetguardian.app)
+ - Add your app’s package name (e.g., com.example.myapplication)
 
  - Download google-services.json
 
@@ -75,8 +83,25 @@ cd SpeedSense
  - <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
  - <uses-permission android:name="android.permission.INTERNET" />
  - <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+ - <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+ - <uses-permission android:name="android.permission.CAR_VENDOR_EXTENSION" /> 
+ - <uses-feature android:name="android.hardware.type.automotive" />
+ - <uses-permission android:name="android.car.permission.CAR_SPEED" />
+ 
+ ### 7. Dependencies
+ 
+ - implementation(libs.firebase.firestore.ktx)
+ - implementation(libs.aws.android.sdk.core)
+ - implementation(libs.aws.android.sdk.sns)
+ - implementation(libs.play.services.location)
+ 
+    // For AAOS
+  - implementation(libs.androidx.car)     // CarPropertyManager
+  - implementation(libs.androidx.app) // For Android Auto apps
+  - implementation(libs.car.lib) // For Android Automotive OS (AAOS)
 
-  ### 7. Testing the App
+
+  ### 8. Testing the App
  - Start a rental session with a customer-specific speed limit
 
  - Inject mock or real GPS speed data (e.g., 80 km/h)
@@ -89,7 +114,7 @@ cd SpeedSense
 
  -In real implementation, you'd pull speed data via GPS or AAOS Vehicle APIs.
 
-### 8. Updated Plan for Real Device Testing (AAOS):
+### 9. Updated Plan for Real Device Testing (AAOS):
 We'll modify SpeedMonitorService to:
 
 Check if Car and CarPropertyManager are available.
@@ -97,5 +122,30 @@ Check if Car and CarPropertyManager are available.
 If yes, use PERF_VEHICLE_SPEED.
 
 Else, fallback to GPS-based speed (optional fallback).
+
+### 10. How to Use
+- Start the app
+
+- Click "Start Rental"
+
+- Car starts monitoring speed
+
+- If speed exceeds the limit:
+
+- User gets a warning (Toast)
+
+- Firebase logs the event
+
+- AWS sends SMS/email to fleet manager
+
+- Click "Stop Rental" to stop monitoring
+
+
+### 11. Testing Notes
+- Ensure emulator supports AAOS
+
+- AWS credentials should be valid
+
+- Firebase project must be active with FCM enabled
 
 
